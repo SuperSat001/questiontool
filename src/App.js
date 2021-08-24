@@ -1,25 +1,58 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from "react";
+import { Grid, Button } from "@material-ui/core";
+import "./stylesheets/app.css";
+import { makeStyles } from "@material-ui/core/styles";
 
-function App() {
+const useStyles = makeStyles((theme) => ({
+  submit: {
+    width: "97%",
+    backgroundColor: "green",
+    transition: "0.3s",
+    color: "#fff",
+    "&:hover": {
+      backgroundColor: "#00ff44",
+      color: "#000",
+    },
+  },
+}));
+
+const App = () => {
+  const [qns, setQns] = useState(20);
+  const [current, setCurrent] = useState(1);
+
+  const classes = useStyles();
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Grid style={{ margin: "2em" }} container spacing={1}>
+      <Grid item container spacing={1} xs={7}>
+        <Grid item xs={12}>
+          <div class="problem">
+            <img src={`assets/${current.toString()}.png`} class="img-qn" />
+          </div>
+        </Grid>
+        <Grid item xs={12}>
+          <textarea
+            placeholder="Submit answer..."
+            name="Text1"
+            cols="105"
+            rows="5"
+          ></textarea>
+          <Button variant="filled" className={classes.submit}>
+            Submit
+          </Button>
+        </Grid>
+      </Grid>
+      <Grid item xs={5}>
+        <div class="sec">
+          {[...Array(qns)].map((elementInArray, index) => (
+            <li onClick={() => setCurrent(index + 1)} id="myUL" key={index}>
+              Q #{(index + 1).toString()}
+            </li>
+          ))}
+        </div>
+      </Grid>
+    </Grid>
   );
-}
+};
 
 export default App;
