@@ -23,6 +23,18 @@ const App = () => {
   const [qns, setQns] = useState(q);
   const [current, setCurrent] = useState(1);
 
+  const [solset, setSolset] = useState({ 1: "hel" });
+
+  const handleSubmit = () => {
+    var loc = JSON.parse(JSON.stringify(solset));
+    loc[current] = document.getElementById("answer").value;
+    document.getElementById("answer").value = "";
+
+    console.log(loc);
+    setSolset(loc);
+    setCurrent(current + 1);
+  };
+
   const classes = useStyles();
 
   return (
@@ -35,12 +47,18 @@ const App = () => {
         </Grid>
         <Grid item xs={2}>
           <textarea
+            id="answer"
             placeholder="Submit answer..."
+            // defaultValue={}
             name="Text1"
             cols="105"
             rows="5"
           ></textarea>
-          <Button variant="filled" className={classes.submit}>
+          <Button
+            onClick={() => handleSubmit()}
+            variant="filled"
+            className={classes.submit}
+          >
             Submit
           </Button>
         </Grid>
