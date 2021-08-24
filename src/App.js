@@ -17,20 +17,23 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const App = () => {
-  const [qns, setQns] = useState(20);
+  const n = "assets";
+  const q = 20;
+
+  const [qns, setQns] = useState(q);
   const [current, setCurrent] = useState(1);
 
   const classes = useStyles();
 
   return (
     <Grid style={{ margin: "2em" }} container spacing={1}>
-      <Grid item container spacing={1} xs={7}>
+      <Grid item container spacing={1} xs={10}>
         <Grid item xs={12}>
           <div class="problem">
-            <img src={`assets/${current.toString()}.png`} class="img-qn" />
+            <img src={`${n}/${current.toString()}.png`} class="img-qn" />
           </div>
         </Grid>
-        <Grid item xs={12}>
+        <Grid item xs={2}>
           <textarea
             placeholder="Submit answer..."
             name="Text1"
@@ -42,7 +45,7 @@ const App = () => {
           </Button>
         </Grid>
       </Grid>
-      <Grid item xs={5}>
+      <Grid item xs={2}>
         <div class="sec">
           {[...Array(qns)].map((elementInArray, index) => (
             <li onClick={() => setCurrent(index + 1)} id="myUL" key={index}>
