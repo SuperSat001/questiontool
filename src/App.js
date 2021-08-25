@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Grid, Button } from "@material-ui/core";
 import "./stylesheets/app.css";
 import { makeStyles } from "@material-ui/core/styles";
+import { CSVDownload } from "react-csv";
 
 const useStyles = makeStyles((theme) => ({
   submit: {
@@ -22,8 +23,23 @@ const App = () => {
 
   const [qns, setQns] = useState(q);
   const [current, setCurrent] = useState(1);
-
+  const [CSV, setCSV] = useState([["Question number", "Answer"]]);
   const [solset, setSolset] = useState({ 1: "hel" });
+
+  const [download, setDownload] = useState(false);
+
+  useEffect(() => {
+    var arr = [["Question number", "Answer"]];
+    var loc = JSON.parse(JSON.stringify(solset));
+
+    for (var key in loc) {
+      if (loc.hasOwnProperty(key)) {
+        arr.push([key, loc[key]]);
+      }
+    }
+
+    setCSV(arr);
+  }, [solset]);
 
   const handleSubmit = () => {
     var loc = JSON.parse(JSON.stringify(solset));
@@ -45,22 +61,37 @@ const App = () => {
             <img src={`${n}/${current.toString()}.png`} class="img-qn" />
           </div>
         </Grid>
-        <Grid item xs={2}>
-          <textarea
-            id="answer"
-            placeholder="Submit answer..."
-            // defaultValue={}
-            name="Text1"
-            cols="105"
-            rows="5"
-          ></textarea>
-          <Button
-            onClick={() => handleSubmit()}
-            variant="filled"
-            className={classes.submit}
-          >
-            Submit
-          </Button>
+        <Grid item container xs={2}>
+          <Grid item xs={12}>
+            <textarea
+              id="answer"
+              placeholder="Submit answer..."
+              // defaultValue={}
+              name="Text1"
+              cols="105"
+              rows="5"
+            ></textarea>
+          </Grid>
+          <Grid item xs={6}>
+            <Button
+              onClick={() => handleSubmit()}
+              variant="filled"
+              className={classes.submit}
+            >
+              Submit
+            </Button>
+          </Grid>
+          <Grid item xs={6}>
+            <Button
+              onClick={() => setDownload(true)}
+              variant="filled"
+              style={{ backgroundColor: "red  " }}
+            >
+              Download
+            </Button>
+          </Grid>
+
+          {download ? <CSVDownload data={CSV} target="_blank" /> : null}
         </Grid>
       </Grid>
       <Grid item xs={2}>
