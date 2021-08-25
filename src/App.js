@@ -32,7 +32,12 @@ const App = () => {
 
     console.log(loc);
     setSolset(loc);
-    setCurrent(current + 1);
+    if (q === current){
+      setCurrent(1);
+    }
+    else{
+      setCurrent(current+1);
+    }
   };
 
   const classes = useStyles();
