@@ -18,8 +18,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const App = () => {
-  const n = "assets";
-  const q = 20;
+  const n = "KVPY 2019";
+  const q = 90;
 
   const [qns, setQns] = useState(q);
   const [current, setCurrent] = useState(1);
